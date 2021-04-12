@@ -7,6 +7,14 @@ public class StageController : MonoBehaviour
     private bool isInit;
     private Stage stage;
 
+    [SerializeField]
+    private Transform container;
+    [SerializeField]
+    private GameObject cellPrefab;
+    [SerializeField]
+    private GameObject blockPrefab;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +27,14 @@ public class StageController : MonoBehaviour
         isInit = true;
 
         BuildStage();
+
+        //stage.PrintAll();
     }
 
     private void BuildStage()
     {
         // Stage¸¦ ±¸¼º
-        
+        stage = StageBuilder.BuildStage(0, 9, 9);
+        stage.ComposeStage(cellPrefab, blockPrefab, container);
     }
 }

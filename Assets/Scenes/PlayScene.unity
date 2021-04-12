@@ -160,7 +160,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.89411765, g: 0.98039216, b: 0.6784314, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -250,6 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b790d7e1519d2ef4d979a7881f52ed91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 1602379382}
+  cellPrefab: {fileID: 1353256787665225602, guid: 0a73aec9324fab64fb4d2134651390be, type: 3}
+  blockPrefab: {fileID: 0}
 --- !u!4 &1602379382
 Transform:
   m_ObjectHideFlags: 0

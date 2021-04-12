@@ -12,7 +12,6 @@ public class CameraAgent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("camera aspect : " + targetTransform.aspect);
         targetTransform.orthographicSize = boardUnit / targetTransform.aspect;
     }
 }

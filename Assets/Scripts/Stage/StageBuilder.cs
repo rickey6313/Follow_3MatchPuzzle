@@ -13,15 +13,36 @@ public class StageBuilder
 
     public Stage ComposeStage(int _row, int _col)
     {
-        Stage stage = new Stage(_row, _col);
+        Stage stage = new Stage(this, _row, _col);
 
         for(int nRow = 0; nRow < _row; nRow++)
         {
             for (int nCol = 0; nCol < _row; nCol++)
             {
-
+                stage.blocks[nRow, nCol] = SpawnBlockForStage(nRow, nCol);
+                stage.cells[nRow, nCol] = SpawnCellForStage(nRow, nCol);
             }
         }
         return stage;
     }
+
+    private Block SpawnBlockForStage(int nRow, int nCol)
+    {
+        return new Block(BlockType.BASIC);
+    }
+
+    private Cell SpawnCellForStage(int nRow, int nCol)
+    {
+        return new Cell(nRow == nCol ? CellType.EMPTY : CellType.BASIC);
+        //return new Cell(CellType.BASIC);
+    }
+
+    public static Stage BuildStage(int nStage, int row, int col)
+    {
+        StageBuilder _stageBuilder = new StageBuilder(nStage);
+        Stage stage = _stageBuilder.ComposeStage(row, col);
+
+        return stage;
+    }
+
 }
