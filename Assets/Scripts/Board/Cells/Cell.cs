@@ -12,7 +12,7 @@ public class Cell
     }
 
     protected CellBehaviour cellBehaviour;
-    public CellBehaviour GetCellBehaviour
+    public CellBehaviour Behaviour
     {
         get { return cellBehaviour; }
         set
@@ -36,7 +36,7 @@ public class Cell
         newobj.transform.parent = containerObj;
 
         // Cell 오브젝트에 적용된 CellBehaviour 가져와서 보관 및 SetCell
-        GetCellBehaviour = newobj.transform.GetComponent<CellBehaviour>();
+        Behaviour = newobj.transform.GetComponent<CellBehaviour>();
         
         return this;
     }

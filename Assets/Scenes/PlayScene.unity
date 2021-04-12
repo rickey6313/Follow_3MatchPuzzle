@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 1602379382}
   cellPrefab: {fileID: 1353256787665225602, guid: 0a73aec9324fab64fb4d2134651390be, type: 3}
-  blockPrefab: {fileID: 0}
+  blockPrefab: {fileID: 288879081556786576, guid: 2eeb29ed3a8a0a044bac57592e29bb1c, type: 3}
 --- !u!4 &1602379382
 Transform:
   m_ObjectHideFlags: 0

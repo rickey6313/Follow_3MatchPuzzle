@@ -40,12 +40,16 @@ public class Board
         float initX = CalcInitX(0.5f);
         float initY = CalcInitX(0.5f);
 
-        for(int nRow = 0; nRow < row; nRow++)
+        for (int nRow = 0; nRow < row; nRow++)
         {
             for (int nCol = 0; nCol < col; nCol++)
             {
                 Cell cell = cells[nRow, nCol].InstantiateCellObj(_cellPrefab, _container);
                 cell.Move(initX + nCol, initY + nRow);
+
+                Block block = blocks[nRow, nCol].InstantiateBlockObj(_blockPrefab, _container);
+                if (block == null) continue;
+                block.Move(initX + nCol, initY + nRow);
             }
         }
     }

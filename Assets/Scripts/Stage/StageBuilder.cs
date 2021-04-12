@@ -28,7 +28,19 @@ public class StageBuilder
 
     private Block SpawnBlockForStage(int nRow, int nCol)
     {
-        return new Block(BlockType.BASIC);
+        return nRow == nCol ? SpawnEmptyBlock() : SpawnBlock();
+    }
+
+    public Block SpawnBlock()
+    {
+        return BlockFactory.SpawnBlock(BlockType.BASIC);
+    }
+
+    public Block SpawnEmptyBlock()
+    {
+        Block newBlock = BlockFactory.SpawnBlock(BlockType.EMPTY);
+
+        return newBlock;
     }
 
     private Cell SpawnCellForStage(int nRow, int nCol)
