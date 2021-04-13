@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b790d7e1519d2ef4d979a7881f52ed91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nStage: 4
   container: {fileID: 1602379382}
   cellPrefab: {fileID: 1353256787665225602, guid: 0a73aec9324fab64fb4d2134651390be, type: 3}
   blockPrefab: {fileID: 288879081556786576, guid: 2eeb29ed3a8a0a044bac57592e29bb1c, type: 3}

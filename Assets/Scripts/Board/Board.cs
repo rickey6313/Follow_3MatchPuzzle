@@ -37,6 +37,10 @@ public class Board
         cellPrefab = _cellPrefab;
         blockPrefab = _blockPrefab;
 
+        // Shuffler »ý¼º ¹× ¼ÅÇÃ
+        BoardShuffler shuffler = new BoardShuffler(this, true);
+        shuffler.Shuffle();
+
         float initX = CalcInitX(0.5f);
         float initY = CalcInitX(0.5f);
 
@@ -52,6 +56,31 @@ public class Board
                 block.Move(initX + nCol, initY + nRow);
             }
         }
+    }
+
+    public bool CanShuffle(int nRow, int nCol, bool loading)
+    {
+        if (!cells[nRow, nCol].GetCellType.IsBlockMovableType())
+            return false;
+
+        return true;
+    }
+
+    public void ChangeBlock(Block block, BlockBreed notAllowedBreed)
+    {
+        BlockBreed genBreed;
+
+        while(true)
+        {
+            genBreed = (BlockBreed)UnityEngine.Random.Range(0, 6);
+
+            if (notAllowedBreed == genBreed)
+                continue;
+
+            break;
+        }
+
+        block.breed = genBreed;
     }
 
     public float CalcInitX(float offset = 0)

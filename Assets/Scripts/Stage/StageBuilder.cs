@@ -5,19 +5,22 @@ using UnityEngine;
 public class StageBuilder
 {
     private int nStage;
+    private StageInfo mStageInfo;
 
     public StageBuilder(int _stage)
     {
         nStage = _stage;
     }
 
-    public Stage ComposeStage(int _row, int _col)
-    {
-        Stage stage = new Stage(this, _row, _col);
+    public Stage ComposeStage()
+    {        
+        mStageInfo = LoadStage(nStage);
+        
+        Stage stage = new Stage(this, mStageInfo.row, mStageInfo.col);
 
-        for(int nRow = 0; nRow < _row; nRow++)
+        for (int nRow = 0; nRow < mStageInfo.row; nRow++)
         {
-            for (int nCol = 0; nCol < _row; nCol++)
+            for (int nCol = 0; nCol < mStageInfo.col; nCol++)
             {
                 stage.blocks[nRow, nCol] = SpawnBlockForStage(nRow, nCol);
                 stage.cells[nRow, nCol] = SpawnCellForStage(nRow, nCol);
@@ -26,9 +29,24 @@ public class StageBuilder
         return stage;
     }
 
+    public StageInfo LoadStage(int nStage)
+    {
+        StageInfo stageInfo = StageReader.LoadStage(nStage);
+        if(stageInfo != null)
+        {
+            Debug.Log(stageInfo.ToString());
+        }
+        return stageInfo;
+    }
+
     private Block SpawnBlockForStage(int nRow, int nCol)
     {
-        return nRow == nCol ? SpawnEmptyBlock() : SpawnBlock();
+        //return nRow == nCol ? SpawnEmptyBlock() : SpawnBlock();
+
+        if (mStageInfo.GetCellType(nRow, nCol) == CellType.EMPTY)
+            return SpawnEmptyBlock();
+
+        return SpawnBlock();
     }
 
     public Block SpawnBlock()
@@ -45,14 +63,15 @@ public class StageBuilder
 
     private Cell SpawnCellForStage(int nRow, int nCol)
     {
-        return new Cell(nRow == nCol ? CellType.EMPTY : CellType.BASIC);
-        //return new Cell(CellType.BASIC);
+        //return new Cell(nRow == nCol ? CellType.EMPTY : CellType.BASIC);
+
+        return CellFactory.SpawnCell(mStageInfo, nRow, nCol);
     }
 
-    public static Stage BuildStage(int nStage, int row, int col)
+    public static Stage BuildStage(int nStage)
     {
         StageBuilder _stageBuilder = new StageBuilder(nStage);
-        Stage stage = _stageBuilder.ComposeStage(row, col);
+        Stage stage = _stageBuilder.ComposeStage();
 
         return stage;
     }

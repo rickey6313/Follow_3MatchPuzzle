@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StageController : MonoBehaviour
 {
+    public int nStage;
     private bool isInit;
     private Stage stage;
 
@@ -34,7 +35,7 @@ public class StageController : MonoBehaviour
     private void BuildStage()
     {
         // Stage¸¦ ±¸¼º
-        stage = StageBuilder.BuildStage(0, 9, 9);
+        stage = StageBuilder.BuildStage(nStage);
         stage.ComposeStage(cellPrefab, blockPrefab, container);
     }
 }
