@@ -11,6 +11,26 @@ public class Block
         set { blockType = value; }
     }
 
+    // 블럭 중복 개수, Shuffle시에 중복검사에 사용
+    private Vector2Int vtDuplicate;
+
+    // 가로방향 중복 검사 시 사용
+    public int horzDuplicate
+    {
+        get { return vtDuplicate.x; }
+        set { vtDuplicate.x = value; }
+    }
+
+    // 세로방향 중복 검사 시 사용
+    public int vertDuplicate
+    {
+        get { return vtDuplicate.y; }
+        set { vtDuplicate.y = value; }
+    }
+
+   // Block에 연결된 GameObject의 Transform을 구한다.
+    public Transform blockObj { get { return blockBehaviour?.transform; } }
+
     protected BlockBehaviour blockBehaviour;
     public BlockBehaviour Behaviour
     {
@@ -65,5 +85,25 @@ public class Block
     public bool isValidate()
     {
         return GetBlockType != BlockType.EMPTY;
+    }
+
+    public void ResetDuplicationInfo()
+    {
+        vtDuplicate.x = 0;
+        vtDuplicate.y = 0;
+    }
+
+    public bool IsEqual(Block block)
+    {
+        if(breed == block.breed)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public bool IsMatchableBlock()
+    {
+        return !(GetBlockType == BlockType.EMPTY);
     }
 }
