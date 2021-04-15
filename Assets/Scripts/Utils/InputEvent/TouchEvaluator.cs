@@ -40,6 +40,7 @@ public static class TouchEvaluator
     /*
      * 두 포인트 사이의 각도를 구한다
      * Input 장치 드래그시에 드래그한 각도를 구하는데 활용한다.
+     * https://unity-programmer.tistory.com/30
      */
     private static float EvalDragAngle(Vector2 vtStart, Vector2 vtEnd)
     {
