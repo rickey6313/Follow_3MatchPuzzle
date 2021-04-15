@@ -93,4 +93,9 @@ public class Board
     {
         return -row / 2.0f + offset;
     }
+
+    public bool IsSwipeable(int nRow, int nCol)
+    {
+        return cells[nRow, nCol].GetCellType.IsBlockMovableType();
+    }
 }
