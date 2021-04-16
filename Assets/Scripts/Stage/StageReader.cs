@@ -12,7 +12,7 @@ public static class StageReader
         {
             StageInfo stageInfo = JsonUtility.FromJson<StageInfo>(textAsset.text);
 
-            Debug.Log(stageInfo.DoValidation());
+            //Debug.Log(stageInfo.DoValidation());
 
             return stageInfo;
         }

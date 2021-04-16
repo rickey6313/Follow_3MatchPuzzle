@@ -16,6 +16,8 @@ public class StageController : MonoBehaviour
     private GameObject blockPrefab;
 
     private InputManager mInputManager;
+    private ActionManager mActionManager;
+
 
     // 입력 상태 처리 플래스, 유효한 블럭을 클릭한 경우 true
     private bool bTouchDown;
@@ -51,11 +53,12 @@ public class StageController : MonoBehaviour
         // Stage를 구성
         stage = StageBuilder.BuildStage(nStage);
         stage.ComposeStage(cellPrefab, blockPrefab, container);
+        mActionManager = new ActionManager(container, stage);
     }
 
     private void OnInputHandler()
-    {
-        if(mInputManager.isTouchDown)
+    {        
+        if(!bTouchDown && mInputManager.isTouchDown)
         {
             // 1.1 보드 기준 Local 좌표를 구한다.
             Vector2 point = mInputManager.touch2BoardPosition;
@@ -74,13 +77,15 @@ public class StageController : MonoBehaviour
                 mClickPos = point;          // 클릭한 Local 좌표 저장
             }
         }
-        else if(mInputManager.isTouchUp)
+        else if(bTouchDown && mInputManager.isTouchUp)
         {
             // 2.1 보드 기준 Local 좌표를 구한다
             Vector2 point = mInputManager.touch2BoardPosition;
-
             // 2.2 스와이프 방향을 구한다.
             Swipe swipeDir = mInputManager.EvalSwipeDir(mClickPos, point);
+
+            if (swipeDir != Swipe.NA)
+                mActionManager.DoSwipeAction(mBlockDownPos.row, mBlockDownPos.col, swipeDir);
 
             bTouchDown = false; // 클릭 상태 플래그 OFF
         }

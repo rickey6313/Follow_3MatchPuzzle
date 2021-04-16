@@ -32,8 +32,8 @@ public class Stage
     {
         // 1. Local 좌표 -> 보드의 블럭 인덱스로 변환
         Vector2 pos = new Vector2(point.x + (maxCol / 2.0f), point.y + (maxRow / 2.0f));
-        int nRow = (int)pos.x;
-        int nCol = (int)pos.y;
+        int nRow = (int)pos.y;
+        int nCol = (int)pos.x;
 
         // 리턴할 블럭 인덱스 생성
         blockPos = new BlockPos(nRow, nCol);
@@ -53,7 +53,60 @@ public class Stage
         {
             return false;
         }
-
         return true;
+    }
+
+    public bool IsValideSwipe(int nRow, int nCol, Swipe swipeDir)
+    {
+        switch(swipeDir)
+        {
+            case Swipe.DOWN:return nRow > 0;
+            case Swipe.UP: return nRow < maxRow -1;
+            case Swipe.LEFT: return nCol > 0;
+            case Swipe.RIGHT: return nCol < maxCol -1;
+            default:
+                return false;
+        }
+    }
+
+    public IEnumerator CoDoSwipeAction(int nRow, int nCol, Swipe swipeDir, Returnable<bool> actionResult)
+    {
+        actionResult.value = false;
+
+        // 1. 스와이프 되는 상대 블럭 위치를 구한다.
+        int nSwipeRow = nRow, nSwipeCol = nCol;
+        nSwipeRow += swipeDir.GetTargetRow();
+        nSwipeCol += swipeDir.GetTargetCol();
+
+        Debug.Assert(nRow != nSwipeRow || nCol != nSwipeCol, "Invalid Swipe : ({nSwipeRow}, {nSwipeCol})");
+        Debug.Assert(nSwipeRow >= 0 && nSwipeRow < maxRow && nSwipeCol >= 0 && nSwipeCol < maxCol, $"Swipe 타겟 블럭 인덱스 오류 = ({nSwipeRow}, {nSwipeCol}) ");
+
+        // 2. 스와이프 가능한 블럭인지 체크한다
+        if(board.IsSwipeable(nSwipeRow, nSwipeCol))
+        {
+            // 2.1 스와이프 대상 블럭(소스, 타겟)과 각 블럭의 이동전 위치를 저장한다.
+            Block targetBlock = blocks[nSwipeRow, nSwipeCol];
+            Block baseBlock = blocks[nRow, nCol];
+
+            Vector3 basePos = baseBlock.blockObj.transform.position;
+            Vector3 targetPos = targetBlock.blockObj.transform.position;
+
+            // 2.2 스와이프 액션을 실행한다.
+            if(targetBlock.IsSwipeable(baseBlock))
+            {
+                // 2.2.1 상대방의 블럭 위치로 이동하는 애니메이션을 수행한다.
+                baseBlock.MoveTo(targetPos, Constants.SWIPE_DURATION);
+                targetBlock.MoveTo(basePos, Constants.SWIPE_DURATION);
+
+                yield return new WaitForSeconds(Constants.SWIPE_DURATION);
+
+                // 2.2.2 Board에 저장된 블럭의 위치를 교환한다.
+                blocks[nRow, nCol] = targetBlock;
+                blocks[nSwipeRow, nSwipeCol] = baseBlock;
+
+                actionResult.value = true;
+            }
+        }
+        yield break;
     }
 }

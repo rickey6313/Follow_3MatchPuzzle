@@ -106,4 +106,14 @@ public class Block
     {
         return !(GetBlockType == BlockType.EMPTY);
     }
+
+    public void MoveTo(Vector3 to, float duration)
+    {
+        blockBehaviour.StartCoroutine(Action2D.MoveTo(blockObj, to, duration));
+    }
+
+    public bool IsSwipeable(Block baseBlock)
+    {
+        return true;
+    }
 }
