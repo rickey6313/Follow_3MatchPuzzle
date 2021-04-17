@@ -5,5 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Match3/Block Config", fileName = "BlockConfig.asset")]
 public class BlockConfig : ScriptableObject
 {
+    public float[] dropSpeed;
     public Sprite[] basicBlockSprites;
 }

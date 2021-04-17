@@ -41,6 +41,8 @@ public class ActionManager
         {
             m_bRunning = true;
 
+            SoundManager.instance.PlayOneShot(Clip.Chomp);
+
             // 1. Swipe Action 수행
             Returnable<bool> bSwipedBlock = new Returnable<bool>(false);
             yield return mStage.CoDoSwipeAction(nRow, nCol, swipeDir, bSwipedBlock);
@@ -77,6 +79,8 @@ public class ActionManager
             if (bBlockMatched.value)
             {
                 matchResult.value = true;
+
+                SoundManager.instance.PlayOneShot(Clip.BlockClear);
 
                 // 매칭 블럭 제거 후 빈블럭 드롭 및 새 블럭 생성을 처리하는 후처리를 수행한다.
                 yield return StartCoroutine(mStage.PostprocessAfterEvaluate());

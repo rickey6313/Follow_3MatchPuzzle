@@ -14,6 +14,4 @@ public static class Constants
     /// </summary>
     public static float BLOCK_DESTROY_SCALE = 0.3f;
 
-    public static float DROP_TIME = 0.3f;
-    
 }

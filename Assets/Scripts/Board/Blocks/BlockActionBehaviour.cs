@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class BlockActionBehaviour : MonoBehaviour
 {
+    [SerializeField]
+    private BlockConfig mBlockConfig;
+
     public bool isMoving { get; set; }
     Queue<Vector3> mMovementQueue = new Queue<Vector3>();
 
@@ -26,7 +29,9 @@ public class BlockActionBehaviour : MonoBehaviour
         {
             Vector2 vtDestination = mMovementQueue.Dequeue();
 
-            float duration = Constants.DROP_TIME;
+            int dropIndex = System.Math.Min(9, System.Math.Max(1, (int)Mathf.Abs(vtDestination.y)));
+            float duration = mBlockConfig.dropSpeed[dropIndex - 1];
+
             yield return CoStartDropSmooth(vtDestination, duration * acc);
         }
 

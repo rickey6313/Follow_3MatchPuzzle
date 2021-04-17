@@ -12,6 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf80968126b899489af91121e2fc19d, type: 3}
   m_Name: BlockConfig
   m_EditorClassIdentifier: 
+  dropSpeed:
+  - 0.2
+  - 0.3
+  - 0.35
+  - 0.4
+  - 0.425
+  - 0.45
+  - 0.475
+  - 0.5
+  - 0.525
   basicBlockSprites:
   - {fileID: 21300000, guid: d41dda32c8eb8489ca685fa8ac3618e7, type: 3}
   - {fileID: 21300000, guid: b3fd567a9dce84bf48b0c4607ed40d05, type: 3}
