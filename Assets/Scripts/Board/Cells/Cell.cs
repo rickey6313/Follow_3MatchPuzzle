@@ -45,4 +45,9 @@ public class Cell
     {
         cellBehaviour.transform.position = new Vector3(x, y);
     }
+
+    public bool IsObstracle()
+    {
+        return GetCellType == CellType.EMPTY;
+    }
 }

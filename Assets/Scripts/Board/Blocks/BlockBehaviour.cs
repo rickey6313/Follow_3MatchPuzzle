@@ -34,4 +34,10 @@ public class BlockBehaviour : MonoBehaviour
             spriteRenderer.sprite = blockConfig.basicBlockSprites[(int)block.breed];
         }
     }
+
+    // ¸ÅÄªµÈ GameObject Á¦°Å
+    public void DoActionClear()
+    {
+        Destroy(gameObject);
+    }
 }

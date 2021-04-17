@@ -45,8 +45,25 @@ public class ActionManager
             Returnable<bool> bSwipedBlock = new Returnable<bool>(false);
             yield return mStage.CoDoSwipeAction(nRow, nCol, swipeDir, bSwipedBlock);
 
+            // 2. Swipe 성공한 경우 보드를 평가(매치블럭 삭제, 빈블럭 드롭, 새블럭 Spawn 등) 한다.
+            if(bSwipedBlock.value)
+            {
+                Returnable<bool> bMathBlock = new Returnable<bool>(false);
+                yield return EvaluateBoard(bMathBlock);
+
+                // Swipe한 블럭이 매치되지 않은 경우에 원상태 복귀
+                if(!bMathBlock.value)
+                {
+                    yield return mStage.CoDoSwipeAction(nRow, nCol, swipeDir, bSwipedBlock);
+                }
+            }
             m_bRunning = false;
         }
         yield break;
+    }
+
+    private IEnumerator EvaluateBoard(Returnable<bool> matchResult)
+    {
+        yield return mStage.Evaluate(matchResult);
     }
 }

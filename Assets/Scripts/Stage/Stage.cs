@@ -109,4 +109,9 @@ public class Stage
         }
         yield break;
     }
+
+    public IEnumerator Evaluate(Returnable<bool> matchResult)
+    {
+        yield return board.Evaluate(matchResult);
+    }
 }
