@@ -23,7 +23,7 @@ public class Board
     private GameObject cellPrefab;
     private GameObject blockPrefab;
     private BoardEnumerator mBoardEnumerator;
-
+    
     public Board(int _row, int _col)
     {
         row = _row;
@@ -40,7 +40,7 @@ public class Board
         container = _container;
         cellPrefab = _cellPrefab;
         blockPrefab = _blockPrefab;
-
+        
         // Shuffler 생성 및 셔플
         BoardShuffler shuffler = new BoardShuffler(this, true);
         shuffler.Shuffle();
@@ -343,11 +343,65 @@ public class Board
         yield break;
     }
 
+    public IEnumerator SpawnBlocksAfterClean(List<Block> movingBlocks)
+    {
+        for(int nCol = 0; nCol < col; nCol++)
+        {
+            for (int nRow = 0; nRow < row; nRow++)
+            {
+                // 비어있는 블럭이 있는 경우, 상위 열은 모두 비어있거나, 장애물로 인해서 남아있음
+                if(blocks[nRow, nCol] == null)
+                {
+                    int nTopRow = nRow;
+
+                    int nSpawnBaseY = 0;
+                    for(int y = nTopRow; y < row; y++)
+                    {
+                        if (blocks[y, nCol] != null || !CanBlockBeAllocatable(y, nCol))
+                            continue;
+
+                        Block block = SpawnBlockWithDrop(y, nCol, nSpawnBaseY, nCol);
+                        if (block != null)
+                            movingBlocks.Add(block);
+                        nSpawnBaseY++;
+                    }
+
+                    break;
+                }
+            }
+        }
+        yield return null;
+    }
+
     private bool CanBlockBeAllocatable(int nRow, int nCol)
     {
         if (!cells[nRow, nCol].GetCellType.IsBlockAllocatableType())
             return false;
 
         return blocks[nRow, nCol] == null;
+    }
+
+    /// <summary>
+    /// 블럭을 생성하고 목적지(nRow, nCol)까지 드롭한다
+    /// </summary>
+    /// <param name="nRow">드롭 후 위치 X</param>
+    /// <param name="nCol">드롭 후 위치 Y</param>
+    /// <param name="nSpawnRow">드롭 전 위치 X</param>
+    /// <param name="nSpawnCol">드롭 전 위치 Y</param>
+    /// <returns></returns>
+    private Block SpawnBlockWithDrop(int nRow, int nCol, int nSpawnRow, int nSpawnCol)
+    {
+        float fInitX = CalcInitX(Constants.BLOCK_ORG);
+        float fInitY = CalcInitY(Constants.BLOCK_ORG) + row;
+
+        Block block = stageBuilder.SpawnBlock().InstantiateBlockObj(blockPrefab, container);
+        if(block != null)
+        {
+            blocks[nRow, nCol] = block;
+            block.Move(fInitX + (float)nSpawnCol, fInitY + (float)nSpawnRow);
+            block.dropDistance = new Vector2(nSpawnCol - nCol, row + (nSpawnRow - nRow));
+        }
+
+        return block;
     }
 }

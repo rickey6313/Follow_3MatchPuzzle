@@ -6,10 +6,18 @@ public class StageBuilder
 {
     private int nStage;
     private StageInfo mStageInfo;
-
+    
     public StageBuilder(int _stage)
     {
         nStage = _stage;
+    }
+
+    public static Stage BuildStage(int nStage)
+    {
+        StageBuilder _stageBuilder = new StageBuilder(nStage);
+        Stage stage = _stageBuilder.ComposeStage();
+
+        return stage;
     }
 
     public Stage ComposeStage()
@@ -63,17 +71,6 @@ public class StageBuilder
 
     private Cell SpawnCellForStage(int nRow, int nCol)
     {
-        //return new Cell(nRow == nCol ? CellType.EMPTY : CellType.BASIC);
-
         return CellFactory.SpawnCell(mStageInfo, nRow, nCol);
     }
-
-    public static Stage BuildStage(int nStage)
-    {
-        StageBuilder _stageBuilder = new StageBuilder(nStage);
-        Stage stage = _stageBuilder.ComposeStage();
-
-        return stage;
-    }
-
 }

@@ -122,7 +122,11 @@ public class Stage
 
         // 1. 제거된 블럭에 따라, 블럭 재배치(상위 -> 하위 이동/애니매이션)
         yield return board.ArrangeBlocksAfterClean(unfilledBlocks, movingBlocks);
-        // 2. 유저에게 생성된 블럭이 잠시동안 보이도록 다른 블럭이 드롭되는 동안 대기한다.
+
+        // 2. 재배치 완료(이동 애니메이션 완료) 후 비어있는 블럭 다시 생성
+        yield return board.SpawnBlocksAfterClean(movingBlocks);
+
+        // 3. 유저에게 생성된 블럭이 잠시동안 보이도록 다른 블럭이 드롭되는 동안 대기한다.
         yield return WaitForDropping(movingBlocks);
     }
 
