@@ -114,4 +114,43 @@ public class Stage
     {
         yield return board.Evaluate(matchResult);
     }
+
+    public IEnumerator PostprocessAfterEvaluate()
+    {
+        List<KeyValuePair<int, int>> unfilledBlocks = new List<KeyValuePair<int, int>>();
+        List<Block> movingBlocks = new List<Block>();
+
+        // 1. 제거된 블럭에 따라, 블럭 재배치(상위 -> 하위 이동/애니매이션)
+        yield return board.ArrangeBlocksAfterClean(unfilledBlocks, movingBlocks);
+        // 2. 유저에게 생성된 블럭이 잠시동안 보이도록 다른 블럭이 드롭되는 동안 대기한다.
+        yield return WaitForDropping(movingBlocks);
+    }
+
+    public IEnumerator WaitForDropping(List<Block> movingBlocks)
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(0.05f);
+
+        while(true)
+        {
+            bool bContinue = false;
+
+            // 이동 중인 블럭이 있는지 검사한다.
+            for(int i = 0; i < movingBlocks.Count; i++)
+            {
+                if(movingBlocks[i].isMoving)
+                {
+                    bContinue = true;
+                    break;
+                }
+            }
+
+            if (!bContinue)
+                break;
+
+            yield return waitForSeconds;
+        }
+        
+        movingBlocks.Clear();
+        yield break;
+    }
 }

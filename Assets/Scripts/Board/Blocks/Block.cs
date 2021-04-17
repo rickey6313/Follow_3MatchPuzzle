@@ -66,6 +66,24 @@ public class Block
         set { m_nDurability = value; }
     }
 
+    private BlockActionBehaviour mBlockActionBehaviour;
+
+    public bool isMoving
+    {
+        get
+        {
+            return blockObj != null && mBlockActionBehaviour.isMoving;
+        }
+    }
+
+    public Vector2 dropDistance
+    {
+        set
+        {
+            mBlockActionBehaviour?.MoveDrop(value);
+        }
+    }
+
     public Block(BlockType type)
     {
         blockType = type;
@@ -93,6 +111,7 @@ public class Block
         newObj.transform.parent = _containerObj;
         // Cell 오브젝트에 적용된 CellBehaviour 가져와서 보관 및 SetCell
         Behaviour = newObj.transform.GetComponent<BlockBehaviour>();
+        mBlockActionBehaviour = newObj.transform.GetComponent<BlockActionBehaviour>();
 
         return this;
     }

@@ -13,5 +13,7 @@ public static class Constants
     /// 블럭이 삭제될 때 줄어드는 크기
     /// </summary>
     public static float BLOCK_DESTROY_SCALE = 0.3f;
+
+    public static float DROP_TIME = 0.3f;
     
 }

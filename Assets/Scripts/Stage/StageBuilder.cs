@@ -34,7 +34,7 @@ public class StageBuilder
         StageInfo stageInfo = StageReader.LoadStage(nStage);
         if(stageInfo != null)
         {
-            Debug.Log(stageInfo.ToString());
+            //Debug.Log(stageInfo.ToString());
         }
         return stageInfo;
     }

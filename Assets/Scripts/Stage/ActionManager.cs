@@ -64,6 +64,30 @@ public class ActionManager
 
     private IEnumerator EvaluateBoard(Returnable<bool> matchResult)
     {
-        yield return mStage.Evaluate(matchResult);
+        
+
+        // 매칭된 블럭이 있는 경우 반복 수행
+        while(true)
+        {
+            // 1. 매치 블럭 제거
+            Returnable<bool> bBlockMatched = new Returnable<bool>(false);
+            yield return StartCoroutine(mStage.Evaluate(bBlockMatched));
+
+            // 2. 3매치 블럭이 있는 경우 후처리  실행(블럭 드롭 등)
+            if (bBlockMatched.value)
+            {
+                matchResult.value = true;
+
+                // 매칭 블럭 제거 후 빈블럭 드롭 및 새 블럭 생성을 처리하는 후처리를 수행한다.
+                yield return StartCoroutine(mStage.PostprocessAfterEvaluate());
+            }
+
+            // 3. 3매치 블럭이 없는 경우 탈출
+            else
+                break;
+
+        }
+
+        yield break;
     }
 }
