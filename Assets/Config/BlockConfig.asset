@@ -29,3 +29,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 21604808ef1294d4996d607b17e012c8, type: 3}
   - {fileID: 21300000, guid: b2675aa6f38e14b16b8e6f5dc2fb2500, type: 3}
   - {fileID: 21300000, guid: a6a939ec3a316490fa4474595a16b1ce, type: 3}
+  explosion: {fileID: 8500369251308818467, guid: 3c1ac59dc9598a44cafcaa1ce47a3a3f, type: 3}
+  blockColors:
+  - {r: 0.38, g: 0.27, b: 0, a: 1}
+  - {r: 0.1, g: 0.5, b: 0.27, a: 1}
+  - {r: 0.38, g: 0.38, b: 0.38, a: 1}
+  - {r: 0.11, g: 0.11, b: 0.11, a: 1}
+  - {r: 0.6, g: 0.1, b: 0, a: 1}
+  - {r: 0.1, g: 0.18, b: 0.2, a: 1}
